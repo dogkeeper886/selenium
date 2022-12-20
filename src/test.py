@@ -16,14 +16,30 @@ driver = webdriver.Remote(
     command_executor='http://192.168.2.46:32019/wd/hub',
     desired_capabilities=capabilities
 )
-driver.set_window_size(width=1920, height=1080)
+
+# Browser setting
+driver.set_window_size(width=1366, height=768)
+driver.delete_all_cookies()
+driver.implicitly_wait(35)
 
 # Run
 logging.info('Run')
-driver.get("https://ruckus.cloud")
+driver.get("https://devalto.ruckuswireless.com")
 
-logging.info('Wait 30 seconds')
-sleep(30)
+# user name
+driver.find_element_by_id('user_username').send_keys(
+    'dog1051@email.com')
+
+# user password
+driver.find_element_by_id('user_password').send_keys('password-1')
+
+# login
+driver.find_element_by_css_selector(
+    'input[type="submit"]').click()
+
+# Check result
+logging.info('Sleep')
+sleep(60)
 
 # End
 logging.info('End')
