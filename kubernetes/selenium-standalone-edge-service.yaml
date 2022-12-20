@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: selenium-standalone-edge
+  name: selenium-standalone-edge
+  namespace: default
+spec:
+  ports:
+  - name: webdriver
+    port: 4444
+    protocol: TCP
+  - name: webview
+    port: 7900
+    protocol: TCP
+  selector:
+    app: selenium-standalone-edge
+  type: NodePort
+
