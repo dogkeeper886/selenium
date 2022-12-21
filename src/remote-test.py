@@ -43,7 +43,7 @@ driver.find_element_by_css_selector(
 try:
     logging.info('Try')
     venuesButton = WebDriverWait(driver, 15).until(
-        expected_conditions.text_to_be_present_in_element((By.LINK_TEXT, 'Venues'), 'Venues'))
+        expected_conditions.element_to_be_clickable((By.LINK_TEXT, 'Venues')))
     # venuesButton = driver.find_element_by_link_text('Venues')
 
     if venuesButton:
