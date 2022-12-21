@@ -55,7 +55,8 @@ try:
 
 except (
         exceptions.NoSuchElementException,
-        AttributeError) as err:
+        AttributeError,
+        exceptions.TimeoutException) as err:
     logging.warn(err.msg)
 
 # End task
