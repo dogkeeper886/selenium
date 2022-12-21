@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: selenium-standalone-firefox
+  name: selenium-standalone-firefox
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: selenium-standalone-firefox
+  template:
+    metadata:
+      labels:
+        app: selenium-standalone-firefox
+    spec:
+      containers:
+      - image: selenium/standalone-firefox:108.0
+        imagePullPolicy: IfNotPresent
+        name: standalone-firefox
