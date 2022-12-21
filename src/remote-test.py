@@ -1,24 +1,19 @@
 from selenium import webdriver
-from time import sleep
-import logging
+from selenium.common import exceptions
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.common.by import By
+from time import sleep
+import logging
 
 # Loggin
-logging.basicConfig(level=logging.DEBUG)
-
-# Setup capabilities
-logging.info('Set capabilities')
-capabilities = webdriver.DesiredCapabilities.EDGE
-#capabilities = webdriver.DesiredCapabilities.CHROME
-logging.debug(capabilities)
+logging.basicConfig(level=logging.INFO)
 
 # Start
 logging.info('Start')
 driver = webdriver.Remote(
-    command_executor='http://192.168.2.46:32019/wd/hub',
-    desired_capabilities=capabilities
+    command_executor='http://192.168.2.46:31623/wd/hub',
+    desired_capabilities=webdriver.DesiredCapabilities.FIREFOX
 )
 
 # Browser setting
@@ -28,7 +23,7 @@ driver.implicitly_wait(35)
 
 # Run
 logging.info('Run')
-driver.get("https://devalto.ruckuswireless.com")
+driver.get("https://qaalto.ruckuswireless.com")
 
 # login
 # user name
@@ -41,18 +36,32 @@ driver.find_element_by_id('user_password').send_keys('password-1')
 # login
 driver.find_element_by_css_selector(
     'input[type="submit"]').click()
-logging.info('Sleep')
-sleep(15)
 
 # dashboard
+# leftMenuItems = driver.find_elements_by_css_selector('rc-left-menu nav a div')
+
 try:
     logging.info('Try')
-    driver.find_element_by_link_text('Venues')
-except:
-    logging.info('Except')
-    driver.refresh()
-finally:
-    logging.info('Finally') 
-    for data in driver.get_log('browser'):
-        logging.info(data)
+    venuesButton = WebDriverWait(driver, 15).until(
+        expected_conditions.text_to_be_present_in_element((By.LINK_TEXT, 'Venues'), 'Venues'))
+    # venuesButton = driver.find_element_by_link_text('Venues')
+
+    if venuesButton:
+        logging.info('Click')
+        venuesButton.click()
+        sleep(30)
+    else:
+        logging.info('No venuesButton')
+
+except (
+        exceptions.NoSuchElementException,
+        AttributeError) as err:
+    logging.warn(err.msg)
+
+# End task
+driver.close()
+
+try:
     driver.quit()
+except exceptions.InvalidSessionIdException as err:
+    logging.warn(err.msg)
