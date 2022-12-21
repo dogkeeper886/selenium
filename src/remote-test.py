@@ -17,9 +17,9 @@ driver = webdriver.Remote(
 )
 
 # Browser setting
-driver.set_window_size(width=1366, height=768)
+driver.set_window_size(width=1920, height=1080)
 driver.delete_all_cookies()
-driver.implicitly_wait(35)
+driver.implicitly_wait(15)
 
 # Run
 logging.info('Run')
@@ -42,7 +42,7 @@ driver.find_element_by_css_selector(
 
 try:
     logging.info('Try')
-    venuesButton = WebDriverWait(driver, 15).until(
+    venuesButton = WebDriverWait(driver, 30).until(
         expected_conditions.element_to_be_clickable((By.LINK_TEXT, 'Venues')))
     # venuesButton = driver.find_element_by_link_text('Venues')
 
@@ -53,11 +53,14 @@ try:
     else:
         logging.info('No venuesButton')
 
-except (
-        exceptions.NoSuchElementException,
-        AttributeError,
-        exceptions.TimeoutException) as err:
-    logging.warn(err.msg)
+except exceptions.NoSuchElementException:
+    logging.warning('NoSuchElementException')
+
+except exceptions.TimeoutException:
+    logging.warning('TimeoutException')
+
+except AttributeError:
+    logging.warning('AttributeError')
 
 # End task
 driver.close()
