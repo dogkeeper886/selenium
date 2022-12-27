@@ -27,10 +27,10 @@ spec:
           name: webview
         resources:
           limits:
-            cpu: 250m
+            cpu: 500m
             ephemeral-storage: 1Gi
             memory: 2G
           requests:
-            cpu: 250m
+            cpu: 500m
             ephemeral-storage: 1Gi
             memory: 2G          
