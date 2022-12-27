@@ -18,3 +18,19 @@ spec:
       - image: selenium/standalone-firefox:108.0
         imagePullPolicy: IfNotPresent
         name: standalone-firefox
+        ports:
+        - containerPort: 4444
+          protocol: TCP
+          name: webdriver
+        - containerPort: 7900
+          protocol: TCP
+          name: webview
+        resources:
+          limits:
+            cpu: 250m
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+          requests:
+            cpu: 250m
+            ephemeral-storage: 1Gi
+            memory: 512M          
