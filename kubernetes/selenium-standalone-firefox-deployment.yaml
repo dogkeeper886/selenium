@@ -36,6 +36,6 @@ spec:
             memory: 1G
         env:
         - name: SE_SCREEN_WIDTH
-          value: '1080'
-        - name: SE_SCREEN_HEIGHT
           value: '1920'
+        - name: SE_SCREEN_HEIGHT
+          value: '1080'
