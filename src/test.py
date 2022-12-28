@@ -9,6 +9,7 @@ import sys
 from dotenv import load_dotenv
 from os import getenv
 
+
 def driverDecorator(func):
     def wrapper(*args, **kwargs):
         try:
@@ -79,10 +80,75 @@ def venue(venueName):
 
 @driverDecorator
 def settings(buttonName):
-    dropdownButton = textElementFinder('Settings', 'span')
+    dropdownButton = textElementFinder('Settings', 'div.button-wrapper span')
     dropdownButton.click()
-    button = textElementFinder(buttonName, 'span')
+    button = textElementFinder(buttonName, 'button span')
     button.click()
+
+
+@driverDecorator
+def channel(channelNumber):
+    channelButton = textElementFinder(str(channelNumber), 'span.channel-text')
+    channelButton.click()
+
+
+@driverDecorator
+def saveRadio():
+    saveButton = textElementFinder(
+        'Save Radio & Airtime Management', 'span.p-button-label'
+    )
+    saveButton.click()
+    toastMessage()
+
+
+
+@driverDecorator
+def toastMessage():
+    summaryMessage = WebDriverWait(driver, 10).until(
+        expected_conditions.presence_of_element_located(
+            (By.CSS_SELECTOR, 'div.summary-area span.leading-text-style')
+        )
+    )
+    logging.info(summaryMessage.text)
+    toastMessage = WebDriverWait(driver, 10).until(
+        expected_conditions.presence_of_all_elements_located(
+            (By.CSS_SELECTOR, 'div.toast-style div')
+        )
+    )
+    for message in toastMessage:
+        logging.info(message.text)
+
+
+@driverDecorator
+def closeDialogue():
+    closeButton = textElementFinder(
+        'Close', 'button.p-button span.p-button-label'
+    )
+    closeButton.click()
+
+
+@driverDecorator
+def tab(tabName):
+    tabTitle = textElementFinder(tabName, 'div.tab-title-div')
+    tabTitle.click()
+
+
+@driverDecorator
+def tableReader():
+    rowGroup = driver.find_element_by_css_selector(
+        'div.ag-center-cols-container')
+    rowRawData = rowGroup.find_elements_by_css_selector('div[role="row"]')
+    for row in rowRawData:
+        nameColumn = row.find_element_by_css_selector('div[col-id="name"]')
+        nameText = nameColumn.find_element_by_css_selector('span.icon-text')
+        statusColumn = row.find_element_by_css_selector(
+            'div[col-id="deviceStatus"]'
+        )
+        statusText = statusColumn.find_element_by_css_selector(
+            'span.icon-text'
+        )
+
+        logging.info('%s %s', nameText.text, statusText.text)
 
 
 if __name__ == '__main__':
@@ -111,11 +177,18 @@ if __name__ == '__main__':
         getenv('LOGIN_PASSWORD')
     )
 
-    # Go to Venues
+    # Wi-Fi
     leftMenu('Venues')
     venue('My-Venue')
-    # settings('Wi-Fi Settings')
-    settings('Switch Settings')
+    settings('Wi-Fi Settings')
+    channel(6)
+    saveRadio()
+    closeDialogue()
+    tab('Networking Devices')
+    tableReader()
+
+    # Switch
+    # settings('Switch Settings')
 
     # Test
     sleep(30)
