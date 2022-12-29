@@ -18,15 +18,6 @@ spec:
       - image: selenium/node-firefox:108.0
         imagePullPolicy: IfNotPresent
         name: node-firefox
-        resources:
-          limits:
-            cpu: 500m
-            ephemeral-storage: 1Gi
-            memory: 1Gi
-          requests:
-            cpu: 500m
-            ephemeral-storage: 1Gi
-            memory: 1Gi
         env:
         - name: SE_EVENT_BUS_HOST
           value: selenium-hub
@@ -38,3 +29,7 @@ spec:
           value: '1920'
         - name: SE_SCREEN_HEIGHT
           value: '1080'          
+        ports:
+        - containerPort: 7900
+          protocol: TCP
+          name: webview          

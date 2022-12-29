@@ -28,12 +28,3 @@ spec:
         - containerPort: 4442
           protocol: TCP
           name: publish
-        resources:
-          limits:
-            cpu: 250m
-            ephemeral-storage: 1Gi
-            memory: 500M
-          requests:
-            cpu: 250m
-            ephemeral-storage: 1Gi
-            memory: 500M
