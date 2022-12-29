@@ -181,14 +181,19 @@ if __name__ == '__main__':
     venue('My-Venue')
     tab('Networking Devices')
 
-    for loop in range(1, 3):
-        tableReader()
+    while True:
+        try:
+            tableReader()
+            driver.refresh()
+            sleep(5)
+        except KeyboardInterrupt:
+            break
 
     # Switch
     # settings('Switch Settings')
 
     # Test
-    sleep(30)
+    #sleep(30)
 
     # End task
     endTask()

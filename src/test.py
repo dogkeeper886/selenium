@@ -184,8 +184,8 @@ if __name__ == '__main__':
     channel(6)
     saveRadio()
     closeDialogue()
-    tab('Networking Devices')
-    tableReader()
+    #tab('Networking Devices')
+    #tableReader()
 
     # Switch
     # settings('Switch Settings')
