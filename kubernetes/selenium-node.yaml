@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: selenium-node-firefox
+  name: selenium-node-firefox
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: selenium-node-firefox
+  template:
+    metadata:
+      labels:
+        app: selenium-node-firefox
+    spec:
+      containers:
+      - image: selenium/node-firefox:108.0
+        imagePullPolicy: IfNotPresent
+        name: node-firefox
+        resources:
+          limits:
+            cpu: 500m
+            ephemeral-storage: 1Gi
+            memory: 1Gi
+          requests:
+            cpu: 500m
+            ephemeral-storage: 1Gi
+            memory: 1Gi
+        env:
+        - name: SE_EVENT_BUS_HOST
+          value: selenium-hub
+        - name: SE_EVENT_BUS_PUBLISH_PORT
+          value: '4442'
+        - name: SE_EVENT_BUS_SUBSCRIBE_PORT
+          value: '4443'
+        - name: SE_SCREEN_WIDTH
+          value: '1920'
+        - name: SE_SCREEN_HEIGHT
+          value: '1080'          
