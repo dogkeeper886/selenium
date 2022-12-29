@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: selenium-hub
+  name: selenium-hub
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: selenium-hub
+  template:
+    metadata:
+      labels:
+        app: selenium-hub
+    spec:
+      containers:
+      - image: selenium/hub:4.7.2
+        imagePullPolicy: IfNotPresent
+        name: hub
+        ports:
+        - containerPort: 4444
+          protocol: TCP
+          name: webdriver
+        - containerPort: 4443
+          protocol: TCP
+          name: subscribe
+        - containerPort: 4442
+          protocol: TCP
+          name: publish
+        resources:
+          limits:
+            cpu: 250m
+            ephemeral-storage: 1Gi
+            memory: 500m
+          requests:
+            cpu: 250m
+            ephemeral-storage: 1Gi
+            memory: 500m
