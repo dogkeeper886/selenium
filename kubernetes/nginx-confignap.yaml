@@ -31,17 +31,24 @@ data:
         #gzip  on;
 
         include /etc/nginx/conf.d/*.conf;
+      
+      server {
+
+        location /firefox/node1/ {
+          proxy_pass http://10.32.0.2:7900/;
+        }
+
+        location /firefox/node2/ {
+          proxy_pass http://10.32.0.3:7900/;
+        }
+        
+        location /firefox/node3/ {
+          proxy_pass http://10.32.0.4:7900/;
+        }
+      }
     }
 
-    location /firefox/node1/ {
-        proxy_pass http://10.32.0.2:7900/;
-    }
-    location /firefox/node2/ {
-        proxy_pass http://10.32.0.3:7900/;
-    }
-    location /firefox/node3/ {
-        proxy_pass http://10.32.0.4:7900/;
-    }
+
 kind: ConfigMap
 metadata:
   name: nginx
