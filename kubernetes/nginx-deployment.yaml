@@ -22,11 +22,11 @@ spec:
         - containerPort: 80
           protocol: TCP
           name: web
-      volumeMounts:
+        volumeMounts:
+        - name: config
+          mountPath: /etc/nginx/nginx.conf          
+          subPath: nginx.conf  
+      volumes:
       - name: config
-        mountPath: /etc/nginx/nginx.conf          
-        subPath: nginx.conf  
-  volumes:
-    - name: config
-      configMap:
-        name: nginx
+        configMap:
+          name: nginx
