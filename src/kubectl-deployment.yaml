@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: kubectl
+  name: kubectl
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kubectl
+  template:
+    metadata:
+      labels:
+        app: kubectl
+    spec:
+      containers:
+      - image: dogkeeper886/kubectl:0.2
+        imagePullPolicy: IfNotPresent
+        name: kubectl
+        resources: {}
+      securityContext: {}
+      serviceAccount: kubectl
+      serviceAccountName: kubectl
