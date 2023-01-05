@@ -35,13 +35,13 @@ data:
       server {
 
         location /firefox/node1/ {
-          proxy_pass http://10.32.0.2:7900/;
+          proxy_pass http://10.40.0.3:7900/;
         }
 
         location /firefox/node2/ {
-          proxy_pass http://10.32.0.3:7900/;
+          proxy_pass http://10.40.0.2:7900/;
         }
-        
+
         location /firefox/node3/ {
           proxy_pass http://10.32.0.4:7900/;
         }
