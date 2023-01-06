@@ -10,7 +10,12 @@ data:
             proxy_pass http://10.1.0.53:7900/;
             proxy_set_header Upgrade $http_upgrade;
             proxy_set_header Connection "upgrade";
-        }  
+        }
+        location /node1/ {
+            proxy_pass http://10.1.0.53:7900/;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+        }          
     }  
 kind: ConfigMap
 metadata:
