@@ -6,25 +6,8 @@ data:
         listen  [::]:80;
         server_name  nginx;
 
-        location /firefox/node1/ {
-          proxy_pass http://10.40.0.3:7900/;
-          proxy_http_version 1.1;
-          proxy_set_header Upgrade $http_upgrade;
-          proxy_set_header Connection "Upgrade";
-          proxy_set_header Host $host;
-        }
-
-        location /firefox/node2/ {
-          proxy_pass http://10.40.0.2:7900/;
-        }
-
-        location /firefox/node3/ {
-          proxy_pass http://10.32.0.4:7900/;
-        }
-
-        error_page   500 502 503 504  /50x.html;
-        location = /50x.html {
-            root   /usr/share/nginx/html;
+        location / {
+          proxy_pass http://10.1.0.53:7900/;
         }
     }  
 kind: ConfigMap
